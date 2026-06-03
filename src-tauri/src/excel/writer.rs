@@ -1,4 +1,4 @@
-use rust_xlsxwriter::{Workbook, Format, XlsxAlign, XlsxBorder, XlsxColor};
+use rust_xlsxwriter::{Workbook, Format, FormatAlign, FormatBorder, Color};
 use std::path::Path;
 
 use crate::models::OvertimeRecord;
@@ -13,7 +13,7 @@ pub fn write_excel(output_path: &str, records: &[OvertimeRecord]) -> Result<(), 
             .map_err(|e| format!("创建输出目录失败: {}", e))?;
     }
 
-    let mut workbook = Workbook::new(output_path);
+    let mut workbook = Workbook::new();
     let worksheet = workbook.add_worksheet();
 
     // 设置工作表名称
@@ -26,24 +26,24 @@ pub fn write_excel(output_path: &str, records: &[OvertimeRecord]) -> Result<(), 
         .set_bold()
         .set_font_name("Microsoft YaHei")
         .set_font_size(11.0)
-        .set_background_color(XlsxColor::RGB(0x9BC2E6))
-        .set_align(XlsxAlign::Center)
-        .set_border(XlsxBorder::Thin);
+        .set_background_color(Color::RGB(0x9BC2E6))
+        .set_align(FormatAlign::Center)
+        .set_border(FormatBorder::Thin);
 
     let body_format = Format::new()
         .set_font_name("SimSun")
         .set_font_size(11.0)
-        .set_align(XlsxAlign::Center)
-        .set_align(XlsxAlign::VerticalCenter)
+        .set_align(FormatAlign::Center)
+        .set_align(FormatAlign::VerticalCenter)
         .set_text_wrap()
-        .set_border(XlsxBorder::Thin);
+        .set_border(FormatBorder::Thin);
 
     // 表头列名（按照目标格式）
     // 序号 | 奖惩项点 | 奖惩明细 | 建议奖励金额 | 建议处罚金额 | 涉及人员 | 开发室
     let headers = ["序号", "奖惩项点", "奖惩明细", "建议奖励金额", "建议处罚金额", "涉及人员", "开发室"];
     for (col, header) in headers.iter().enumerate() {
         worksheet
-            .write_string(0, col as u16, header, &header_format)
+            .write_string_with_format(0, col as u16, *header, &header_format)
             .map_err(|e| format!("写入表头失败: {}", e))?;
     }
 
@@ -81,43 +81,44 @@ pub fn write_excel(output_path: &str, records: &[OvertimeRecord]) -> Result<(), 
 
     for (lab, group_records) in &groups {
         let lab_full = format!("{}研究室", lab);
+        let group_start_row = current_row;
 
         for record in group_records {
             let row = current_row;
 
             // 序号
             worksheet
-                .write_number(row, 0, seq as f64, &body_format)
+                .write_number_with_format(row, 0, seq as f64, &body_format)
                 .ok();
 
             // 奖惩项点
             worksheet
-                .write_string(row, 1, "节假日交通奖励", &body_format)
+                .write_string_with_format(row, 1, "节假日交通奖励", &body_format)
                 .ok();
 
             // 奖惩明细（加班记录）
             worksheet
-                .write_string(row, 2, &record.overtime_records, &body_format)
+                .write_string_with_format(row, 2, &record.overtime_records, &body_format)
                 .ok();
 
             // 建议奖励金额
             worksheet
-                .write_string(row, 3, &record.total_reward, &body_format)
+                .write_string_with_format(row, 3, &record.total_reward, &body_format)
                 .ok();
 
             // 建议处罚金额（空）
             worksheet
-                .write_string(row, 4, "", &body_format)
+                .write_string_with_format(row, 4, "", &body_format)
                 .ok();
 
             // 涉及人员
             worksheet
-                .write_string(row, 5, &record.name, &body_format)
+                .write_string_with_format(row, 5, &record.name, &body_format)
                 .ok();
 
             // 开发室
             worksheet
-                .write_string(row, 6, &lab_full, &body_format)
+                .write_string_with_format(row, 6, &lab_full, &body_format)
                 .ok();
 
             // 计算行高（基于换行数）
@@ -128,11 +129,32 @@ pub fn write_excel(output_path: &str, records: &[OvertimeRecord]) -> Result<(), 
             current_row += 1;
         }
 
+        // 合并序号列（如果有多行）
+        if group_records.len() > 1 {
+            worksheet
+                .merge_range(group_start_row, 0, current_row - 1, 0, &seq.to_string(), &body_format)
+                .ok();
+        }
+
+        // 合并奖惩项点列（如果有多行）
+        if group_records.len() > 1 {
+            worksheet
+                .merge_range(group_start_row, 1, current_row - 1, 1, "节假日交通奖励", &body_format)
+                .ok();
+        }
+
+        // 合并开发室列（如果有多行）
+        if group_records.len() > 1 {
+            worksheet
+                .merge_range(group_start_row, 6, current_row - 1, 6, &lab_full, &body_format)
+                .ok();
+        }
+
         seq += 1;
     }
 
     workbook
-        .close()
+        .save(output_path)
         .map_err(|e| format!("保存 Excel 文件失败: {}", e))?;
 
     Ok(())

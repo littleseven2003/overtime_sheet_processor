@@ -4,7 +4,6 @@ import {
   NCard,
   NButton,
   NSpace,
-  NText,
   NAlert,
   useMessage,
 } from "naive-ui";

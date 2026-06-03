@@ -13,7 +13,7 @@ interface ResultRow {
   penalty: string;
 }
 
-const props = defineProps<{
+defineProps<{
   data: ResultRow[];
 }>();
 

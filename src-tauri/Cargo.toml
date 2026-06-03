@@ -5,10 +5,6 @@ edition = "2021"
 description = "加班表处理工具"
 authors = ["littleseven2003"]
 
-[lib]
-name = "overtime_sheet_processor_lib"
-crate-type = ["staticlib", "cdylib", "rlib"]
-
 [build-dependencies]
 tauri-build = { version = "2", features = [] }
 

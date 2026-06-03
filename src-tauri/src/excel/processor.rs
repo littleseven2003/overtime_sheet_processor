@@ -49,33 +49,23 @@ pub fn process_records(
 }
 
 /// 格式化加班记录字符串
-/// 输入: "5月1日,5月2日,5月3日" 或类似格式
-/// 输出: "5月1日加班\n5月2日加班\n5月3日加班"（按日期排序）
+/// 输入: "[1.2026-05-02 奖励100, 2.2026-05-23 奖励100, 3.2026-05-31 奖励50]"
+/// 输出: "5月2日加班\n5月23日加班\n5月31日加班"
 fn format_overtime_records(raw: &str) -> String {
     if raw.trim().is_empty() {
         return String::new();
     }
 
-    let re_date = Regex::new(r"(\d{1,2})月(\d{1,2})日").unwrap();
-    let re_day = Regex::new(r"(\d{1,2})日").unwrap();
+    // 匹配 YYYY-MM-DD 格式的日期
+    let re_date = Regex::new(r"(\d{4})-(\d{1,2})-(\d{1,2})").unwrap();
 
     let mut dates: Vec<(u32, u32, String)> = Vec::new();
 
-    // 尝试匹配完整日期 (X月X日)
     for cap in re_date.captures_iter(raw) {
-        let month: u32 = cap[1].parse().unwrap_or(0);
-        let day: u32 = cap[2].parse().unwrap_or(0);
+        let month: u32 = cap[2].parse().unwrap_or(0);
+        let day: u32 = cap[3].parse().unwrap_or(0);
         let text = format!("{}月{}日加班", month, day);
         dates.push((month, day, text));
-    }
-
-    // 如果没有完整日期，尝试只匹配日
-    if dates.is_empty() {
-        for cap in re_day.captures_iter(raw) {
-            let day: u32 = cap[1].parse().unwrap_or(0);
-            let text = format!("{}日加班", day);
-            dates.push((0, day, text));
-        }
     }
 
     if dates.is_empty() {
@@ -97,8 +87,15 @@ mod tests {
 
     #[test]
     fn test_format_overtime_records() {
-        let result = format_overtime_records("5月1日,5月3日,5月2日");
-        assert_eq!(result, "5月1日加班\n5月2日加班\n5月3日加班");
+        let input = "[1.2026-05-02 奖励100, 2.2026-05-23 奖励100, 3.2026-05-31 奖励50]";
+        let result = format_overtime_records(input);
+        assert_eq!(result, "5月2日加班\n5月23日加班\n5月31日加班");
+    }
+
+    #[test]
+    fn test_format_single_date() {
+        let result = format_overtime_records("2026-05-10 奖励50");
+        assert_eq!(result, "5月10日加班");
     }
 
     #[test]

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref, watch, nextTick } from "vue";
-import { NCard, NText } from "naive-ui";
 import type { LogEntry } from "../types";
 
 const props = defineProps<{
@@ -9,7 +8,6 @@ const props = defineProps<{
 
 const logContainer = ref<HTMLElement>();
 
-// 自动滚动到底部
 watch(
   () => props.logs.length,
   async () => {
@@ -23,63 +21,164 @@ watch(
 function getLevelColor(level: string) {
   switch (level) {
     case "success":
-      return "#18a058";
+      return "#4A9D7C";
     case "error":
-      return "#d03050";
+      return "#D64545";
     default:
-      return "#2080f0";
+      return "#7AA8C8";
+  }
+}
+
+function getLevelBg(level: string) {
+  switch (level) {
+    case "success":
+      return "rgba(74, 157, 124, 0.12)";
+    case "error":
+      return "rgba(214, 69, 69, 0.12)";
+    default:
+      return "rgba(122, 168, 200, 0.12)";
   }
 }
 </script>
 
 <template>
-  <n-card title="处理日志" size="small">
-    <div ref="logContainer" class="log-container">
+  <div class="log-panel">
+    <div class="log-header">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+        <polyline points="14 2 14 8 20 8"/>
+        <line x1="16" y1="13" x2="8" y2="13"/>
+        <line x1="16" y1="17" x2="8" y2="17"/>
+      </svg>
+      <h3>处理日志</h3>
+      <span v-if="logs.length > 0" class="log-count">{{ logs.length }}</span>
+    </div>
+    <div ref="logContainer" class="log-body">
+      <div v-if="logs.length === 0" class="log-empty">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+          <polyline points="14 2 14 8 20 8"/>
+        </svg>
+        <span>等待处理...</span>
+      </div>
       <div
         v-for="(log, index) in logs"
         :key="index"
         class="log-line"
       >
-        <n-text :style="{ color: getLevelColor(log.level) }">
-          [{{ log.level.toUpperCase() }}]
-        </n-text>
-        <n-text depth="3" class="log-time">{{ log.time }}</n-text>
-        <n-text>{{ log.message }}</n-text>
-      </div>
-      <div v-if="logs.length === 0" class="empty-log">
-        <n-text depth="3" italic>暂无日志</n-text>
+        <span
+          class="log-badge"
+          :style="{ color: getLevelColor(log.level), background: getLevelBg(log.level) }"
+        >
+          {{ log.level === "info" ? "INFO" : log.level === "success" ? "OK" : "ERR" }}
+        </span>
+        <span class="log-time">{{ log.time }}</span>
+        <span class="log-msg">{{ log.message }}</span>
       </div>
     </div>
-  </n-card>
+  </div>
 </template>
 
 <style scoped>
-.log-container {
-  height: 200px;
+.log-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: white;
+  border-radius: 12px;
+  border: 1px solid #E8E4E0;
+  overflow: hidden;
+  min-height: 0;
+}
+
+.log-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 18px;
+  border-bottom: 1px solid #F0ECEA;
+  color: #2D2A26;
+  flex-shrink: 0;
+}
+
+.log-header svg {
+  color: #D4764E;
+}
+
+.log-header h3 {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.log-count {
+  margin-left: auto;
+  font-size: 11px;
+  font-weight: 600;
+  color: #D4764E;
+  background: rgba(212, 118, 78, 0.1);
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+
+.log-body {
+  flex: 1;
   overflow-y: auto;
-  background-color: #1e1e1e;
-  border-radius: 4px;
-  padding: 12px;
-  font-family: "Consolas", "Monaco", monospace;
+  padding: 12px 16px;
+  font-family: "SF Mono", "Consolas", "Monaco", monospace;
+  font-size: 12.5px;
+  line-height: 1.7;
+  background: #2D2A26;
+}
+
+.log-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  height: 100%;
+  color: #5A5550;
+}
+
+.log-empty span {
+  font-family: "DM Sans", sans-serif;
   font-size: 13px;
-  line-height: 1.6;
+  color: #6A6560;
 }
 
 .log-line {
   display: flex;
-  gap: 8px;
-  align-items: baseline;
+  align-items: center;
+  gap: 10px;
+  padding: 2px 0;
+  animation: fadeIn 0.15s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.log-badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-family: "SF Mono", "Consolas", monospace;
+  min-width: 32px;
+  text-align: center;
+  flex-shrink: 0;
 }
 
 .log-time {
-  font-size: 12px;
-  min-width: 80px;
+  color: #6A6560;
+  font-size: 11px;
+  min-width: 60px;
+  flex-shrink: 0;
 }
 
-.empty-log {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
+.log-msg {
+  color: #C8C0B8;
+  word-break: break-all;
 }
 </style>

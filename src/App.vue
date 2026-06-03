@@ -23,7 +23,35 @@ export default defineComponent({
     return {
       themeOverrides: {
         common: {
-          primaryColor: "#18a058",
+          primaryColor: "#D4764E",
+          primaryColorHover: "#C06840",
+          primaryColorPressed: "#A85A36",
+          primaryColorSuppl: "#D4764E",
+          borderRadius: "8px",
+          borderRadiusSmall: "6px",
+          fontFamily: "'DM Sans', 'Microsoft YaHei', sans-serif",
+          fontSize: "14px",
+          fontSizeMini: "12px",
+          fontSizeSmall: "13px",
+          fontSizeMedium: "14px",
+          fontSizeLarge: "15px",
+          heightMedium: "38px",
+          heightSmall: "32px",
+        },
+        Button: {
+          borderRadiusMedium: "8px",
+          borderRadiusSmall: "6px",
+          fontWeight: "500",
+        },
+        Card: {
+          borderRadius: "12px",
+          paddingMedium: "20px",
+          paddingSmall: "16px",
+          titleFontSizeSmall: "14px",
+          titleFontWeight: "600",
+        },
+        Tag: {
+          borderRadius: "6px",
         },
       },
     };
@@ -32,6 +60,8 @@ export default defineComponent({
 </script>
 
 <style>
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&display=swap");
+
 * {
   margin: 0;
   padding: 0;
@@ -39,7 +69,28 @@ export default defineComponent({
 }
 
 body {
-  font-family: "Microsoft YaHei", "PingFang SC", "Helvetica Neue", sans-serif;
-  background-color: #f5f5f5;
+  font-family: "DM Sans", "Microsoft YaHei", "PingFang SC", sans-serif;
+  background-color: #F5F2EE;
+  color: #2D2A26;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow: hidden;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #D0CCC8;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #B8B4B0;
 }
 </style>

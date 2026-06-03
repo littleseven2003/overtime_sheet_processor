@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import { NCheckboxGroup, NCheckbox, NButton, NSpace, NText } from "naive-ui";
 
 const props = defineProps<{
   labs: string[];
@@ -16,6 +15,17 @@ const selectedLabs = computed({
   set: (val) => emit("update:modelValue", val),
 });
 
+function toggle(lab: string) {
+  const current = [...selectedLabs.value];
+  const idx = current.indexOf(lab);
+  if (idx >= 0) {
+    current.splice(idx, 1);
+  } else {
+    current.push(lab);
+  }
+  emit("update:modelValue", current);
+}
+
 function selectAll() {
   emit("update:modelValue", [...props.labs]);
 }
@@ -23,32 +33,115 @@ function selectAll() {
 function deselectAll() {
   emit("update:modelValue", []);
 }
+
+function isSelected(lab: string) {
+  return selectedLabs.value.includes(lab);
+}
 </script>
 
 <template>
   <div class="lab-selector">
-    <n-space vertical>
-      <n-text strong>选择研究室</n-text>
-      <n-checkbox-group v-model:value="selectedLabs">
-        <n-space>
-          <n-checkbox
-            v-for="lab in labs"
-            :key="lab"
-            :value="lab"
-            :label="lab"
-          />
-        </n-space>
-      </n-checkbox-group>
-      <n-space>
-        <n-button size="small" @click="selectAll">全选</n-button>
-        <n-button size="small" @click="deselectAll">取消全选</n-button>
-      </n-space>
-    </n-space>
+    <div class="lab-grid">
+      <button
+        v-for="lab in labs"
+        :key="lab"
+        class="lab-chip"
+        :class="{ selected: isSelected(lab) }"
+        @click="toggle(lab)"
+      >
+        <svg v-if="isSelected(lab)" class="check-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+        <span>{{ lab }}</span>
+      </button>
+    </div>
+    <div class="lab-actions">
+      <button class="link-btn" @click="selectAll">全选</button>
+      <span class="link-divider">·</span>
+      <button class="link-btn" @click="deselectAll">取消全选</button>
+      <span v-if="selectedLabs.length > 0" class="selected-count">
+        已选 {{ selectedLabs.length }} 个
+      </span>
+    </div>
   </div>
 </template>
 
 <style scoped>
 .lab-selector {
-  padding: 12px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.lab-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.lab-chip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border: 1.5px solid #E0DCD8;
+  border-radius: 8px;
+  background: #FDFCFA;
+  font-family: "DM Sans", sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: #5A5550;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.lab-chip:hover {
+  border-color: #D4764E;
+  color: #D4764E;
+  background: #FFF8F5;
+}
+
+.lab-chip.selected {
+  border-color: #D4764E;
+  background: linear-gradient(135deg, #D4764E, #C06840);
+  color: white;
+}
+
+.check-icon {
+  flex-shrink: 0;
+}
+
+.lab-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.link-btn {
+  background: none;
+  border: none;
+  font-family: "DM Sans", sans-serif;
+  font-size: 12px;
+  color: #A09890;
+  cursor: pointer;
+  padding: 2px 0;
+  transition: color 0.2s;
+}
+
+.link-btn:hover {
+  color: #D4764E;
+}
+
+.link-divider {
+  color: #D0CCC8;
+  font-size: 12px;
+}
+
+.selected-count {
+  margin-left: auto;
+  font-size: 12px;
+  color: #D4764E;
+  font-weight: 500;
 }
 </style>

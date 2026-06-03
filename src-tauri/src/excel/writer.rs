@@ -75,20 +75,24 @@ pub fn write_excel(output_path: &str, records: &[OvertimeRecord]) -> Result<(), 
         groups.push((lab, current_group));
     }
 
+    // 计算总行数
+    let total_rows: usize = groups.iter().map(|g| g.1.len()).sum();
+
     // 写入数据行
     let mut current_row: u32 = 1;
-    let mut seq: u32 = 1;
+    let data_start_row: u32 = 1;
+    let data_end_row: u32 = data_start_row + total_rows as u32 - 1;
 
+    // 先写入所有数据
     for (lab, group_records) in &groups {
         let lab_full = format!("{}研究室", lab);
-        let group_start_row = current_row;
 
         for record in group_records {
             let row = current_row;
 
             // 序号
             worksheet
-                .write_number_with_format(row, 0, seq as f64, &body_format)
+                .write_number_with_format(row, 0, 1.0, &body_format)
                 .ok();
 
             // 奖惩项点
@@ -128,29 +132,36 @@ pub fn write_excel(output_path: &str, records: &[OvertimeRecord]) -> Result<(), 
 
             current_row += 1;
         }
+    }
 
-        // 合并序号列
-        if current_row - 1 > group_start_row {
+    // 合并序号列（所有行合并）
+    if total_rows > 1 {
+        worksheet
+            .merge_range(data_start_row, 0, data_end_row, 0, "1", &body_format)
+            .ok();
+    }
+
+    // 合并奖惩项点列（所有行合并）
+    if total_rows > 1 {
+        worksheet
+            .merge_range(data_start_row, 1, data_end_row, 1, "节假日交通奖励", &body_format)
+            .ok();
+    }
+
+    // 合并开发室列（按研究室分别合并）
+    current_row = data_start_row;
+    for (lab, group_records) in &groups {
+        let lab_full = format!("{}研究室", lab);
+        let group_start_row = current_row;
+        let group_end_row = current_row + group_records.len() as u32 - 1;
+
+        if group_records.len() > 1 {
             worksheet
-                .merge_range(group_start_row, 0, current_row - 1, 0, &seq.to_string(), &body_format)
+                .merge_range(group_start_row, 6, group_end_row, 6, &lab_full, &body_format)
                 .ok();
         }
 
-        // 合并奖惩项点列
-        if current_row - 1 > group_start_row {
-            worksheet
-                .merge_range(group_start_row, 1, current_row - 1, 1, "节假日交通奖励", &body_format)
-                .ok();
-        }
-
-        // 合并开发室列
-        if current_row - 1 > group_start_row {
-            worksheet
-                .merge_range(group_start_row, 6, current_row - 1, 6, &lab_full, &body_format)
-                .ok();
-        }
-
-        seq += 1;
+        current_row += group_records.len() as u32;
     }
 
     workbook

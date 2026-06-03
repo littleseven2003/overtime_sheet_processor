@@ -85,7 +85,6 @@ const columns: DataTableColumns<ResultRow> = [
         :single-line="false"
         size="small"
         :max-height="220"
-        :row-class-name="() => 'custom-row'"
       />
     </div>
   </div>
@@ -97,7 +96,7 @@ const columns: DataTableColumns<ResultRow> = [
   flex-direction: column;
   background: white;
   border-radius: 12px;
-  border: 1px solid #E8E4E0;
+  border: 1px solid #E2E8F0;
   overflow: hidden;
   max-height: 280px;
 }
@@ -107,13 +106,13 @@ const columns: DataTableColumns<ResultRow> = [
   align-items: center;
   gap: 8px;
   padding: 12px 18px;
-  border-bottom: 1px solid #F0ECEA;
-  color: #2D2A26;
+  border-bottom: 1px solid #F1F5F9;
+  color: #1E293B;
   flex-shrink: 0;
 }
 
 .result-header svg {
-  color: #4A9D7C;
+  color: #22C55E;
 }
 
 .result-header h3 {
@@ -124,7 +123,7 @@ const columns: DataTableColumns<ResultRow> = [
 .result-count {
   margin-left: auto;
   font-size: 12px;
-  color: #A09890;
+  color: #94A3B8;
 }
 
 .result-body {

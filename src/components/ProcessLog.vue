@@ -21,22 +21,22 @@ watch(
 function getLevelColor(level: string) {
   switch (level) {
     case "success":
-      return "#4A9D7C";
+      return "#22C55E";
     case "error":
-      return "#D64545";
+      return "#EF4444";
     default:
-      return "#7AA8C8";
+      return "#60A5FA";
   }
 }
 
 function getLevelBg(level: string) {
   switch (level) {
     case "success":
-      return "rgba(74, 157, 124, 0.12)";
+      return "rgba(34, 197, 94, 0.12)";
     case "error":
-      return "rgba(214, 69, 69, 0.12)";
+      return "rgba(239, 68, 68, 0.12)";
     default:
-      return "rgba(122, 168, 200, 0.12)";
+      return "rgba(96, 165, 250, 0.12)";
   }
 }
 </script>
@@ -86,7 +86,7 @@ function getLevelBg(level: string) {
   flex-direction: column;
   background: white;
   border-radius: 12px;
-  border: 1px solid #E8E4E0;
+  border: 1px solid #E2E8F0;
   overflow: hidden;
   min-height: 0;
 }
@@ -96,13 +96,13 @@ function getLevelBg(level: string) {
   align-items: center;
   gap: 8px;
   padding: 14px 18px;
-  border-bottom: 1px solid #F0ECEA;
-  color: #2D2A26;
+  border-bottom: 1px solid #F1F5F9;
+  color: #1E293B;
   flex-shrink: 0;
 }
 
 .log-header svg {
-  color: #D4764E;
+  color: #3B82F6;
 }
 
 .log-header h3 {
@@ -114,8 +114,8 @@ function getLevelBg(level: string) {
   margin-left: auto;
   font-size: 11px;
   font-weight: 600;
-  color: #D4764E;
-  background: rgba(212, 118, 78, 0.1);
+  color: #3B82F6;
+  background: rgba(59, 130, 246, 0.1);
   padding: 2px 8px;
   border-radius: 10px;
 }
@@ -127,7 +127,7 @@ function getLevelBg(level: string) {
   font-family: "SF Mono", "Consolas", "Monaco", monospace;
   font-size: 12.5px;
   line-height: 1.7;
-  background: #2D2A26;
+  background: #1E293B;
 }
 
 .log-empty {
@@ -137,13 +137,13 @@ function getLevelBg(level: string) {
   justify-content: center;
   gap: 12px;
   height: 100%;
-  color: #5A5550;
+  color: #475569;
 }
 
 .log-empty span {
   font-family: "DM Sans", sans-serif;
   font-size: 13px;
-  color: #6A6560;
+  color: #64748B;
 }
 
 .log-line {
@@ -171,14 +171,14 @@ function getLevelBg(level: string) {
 }
 
 .log-time {
-  color: #6A6560;
+  color: #64748B;
   font-size: 11px;
   min-width: 60px;
   flex-shrink: 0;
 }
 
 .log-msg {
-  color: #C8C0B8;
+  color: #CBD5E1;
   word-break: break-all;
 }
 </style>

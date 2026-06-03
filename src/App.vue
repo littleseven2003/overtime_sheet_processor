@@ -23,10 +23,10 @@ export default defineComponent({
     return {
       themeOverrides: {
         common: {
-          primaryColor: "#D4764E",
-          primaryColorHover: "#C06840",
-          primaryColorPressed: "#A85A36",
-          primaryColorSuppl: "#D4764E",
+          primaryColor: "#3B82F6",
+          primaryColorHover: "#2563EB",
+          primaryColorPressed: "#1D4ED8",
+          primaryColorSuppl: "#3B82F6",
           borderRadius: "8px",
           borderRadiusSmall: "6px",
           fontFamily: "'DM Sans', 'Microsoft YaHei', sans-serif",
@@ -70,8 +70,8 @@ export default defineComponent({
 
 body {
   font-family: "DM Sans", "Microsoft YaHei", "PingFang SC", sans-serif;
-  background-color: #F5F2EE;
-  color: #2D2A26;
+  background-color: #F0F4F8;
+  color: #1E293B;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow: hidden;
@@ -86,11 +86,11 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #D0CCC8;
+  background: #CBD5E1;
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #B8B4B0;
+  background: #94A3B8;
 }
 </style>

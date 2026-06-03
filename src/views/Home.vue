@@ -15,7 +15,6 @@ import type { FileMeta, LogEntry } from "../types";
 
 const message = useMessage();
 
-// 状态
 const filePath = ref("");
 const fileMeta = ref<FileMeta | null>(null);
 const selectedLabs = ref<string[]>([]);
@@ -34,7 +33,6 @@ const resultData = ref<
   }>
 >([]);
 
-// 日志监听
 let unlisten: (() => void) | null = null;
 
 onMounted(async () => {
@@ -53,7 +51,6 @@ onUnmounted(() => {
   unlisten?.();
 });
 
-// 文件选择回调
 async function onFileSelected(path: string) {
   filePath.value = path;
   fileMeta.value = null;
@@ -68,7 +65,6 @@ async function onFileSelected(path: string) {
   }
 }
 
-// 开始处理
 async function handleProcess() {
   if (!filePath.value) {
     message.warning("请先选择 Excel 文件");
@@ -134,11 +130,10 @@ async function handleProcess() {
       </div>
     </header>
 
-    <!-- 主内容区：左右分栏 -->
+    <!-- 主内容区 -->
     <main class="app-main">
-      <!-- 左侧：操作面板 -->
+      <!-- 左侧操作面板 -->
       <aside class="panel-left">
-        <!-- 文件选择 -->
         <section class="section">
           <div class="section-header">
             <svg class="section-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -149,7 +144,6 @@ async function handleProcess() {
           <FileSelector @file-selected="onFileSelected" />
         </section>
 
-        <!-- 研究室选择 -->
         <section v-if="fileMeta && fileMeta.labs.length > 0" class="section">
           <div class="section-header">
             <svg class="section-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -163,7 +157,6 @@ async function handleProcess() {
           <LabSelector :labs="fileMeta.labs" v-model="selectedLabs" />
         </section>
 
-        <!-- 处理按钮 -->
         <div class="action-area">
           <button
             class="process-btn"
@@ -182,7 +175,7 @@ async function handleProcess() {
         </div>
       </aside>
 
-      <!-- 右侧：日志和结果 -->
+      <!-- 右侧日志和结果 -->
       <section class="panel-right">
         <ProcessLog :logs="logs" />
         <ResultTable v-if="resultData.length > 0" :data="resultData" />
@@ -196,17 +189,17 @@ async function handleProcess() {
   height: 100vh;
   display: flex;
   flex-direction: column;
-  background-color: #F5F2EE;
+  background-color: #F0F4F8;
 }
 
-/* ===== 顶部标题栏 ===== */
+/* 顶部标题栏 */
 .app-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 16px 28px;
-  background: linear-gradient(135deg, #2D2A26 0%, #3D3832 100%);
-  color: #F5F2EE;
+  background: linear-gradient(135deg, #1E293B 0%, #334155 100%);
+  color: #F1F5F9;
   flex-shrink: 0;
 }
 
@@ -219,7 +212,7 @@ async function handleProcess() {
 .app-icon {
   width: 40px;
   height: 40px;
-  background: linear-gradient(135deg, #D4764E, #E8956E);
+  background: linear-gradient(135deg, #3B82F6, #60A5FA);
   border-radius: 10px;
   display: flex;
   align-items: center;
@@ -238,7 +231,7 @@ async function handleProcess() {
 
 .header-subtitle {
   font-size: 12px;
-  color: #A09890;
+  color: #94A3B8;
   letter-spacing: 0.3px;
 }
 
@@ -255,18 +248,18 @@ async function handleProcess() {
   background: rgba(255, 255, 255, 0.08);
   border-radius: 20px;
   font-size: 13px;
-  color: #C8C0B8;
+  color: #CBD5E1;
 }
 
 .status-dot {
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: #4A9D7C;
-  box-shadow: 0 0 6px rgba(74, 157, 124, 0.5);
+  background: #22C55E;
+  box-shadow: 0 0 6px rgba(34, 197, 94, 0.5);
 }
 
-/* ===== 主内容区 ===== */
+/* 主内容区 */
 .app-main {
   flex: 1;
   display: flex;
@@ -274,7 +267,7 @@ async function handleProcess() {
   overflow: hidden;
 }
 
-/* ===== 左侧面板 ===== */
+/* 左侧面板 */
 .panel-left {
   width: 340px;
   min-width: 340px;
@@ -283,15 +276,15 @@ async function handleProcess() {
   flex-direction: column;
   gap: 16px;
   overflow-y: auto;
-  border-right: 1px solid #E8E4E0;
-  background: #FAFAF8;
+  border-right: 1px solid #E2E8F0;
+  background: #F8FAFC;
 }
 
 .section {
   background: white;
   border-radius: 12px;
   padding: 16px;
-  border: 1px solid #E8E4E0;
+  border: 1px solid #E2E8F0;
 }
 
 .section-header {
@@ -302,18 +295,18 @@ async function handleProcess() {
 }
 
 .section-icon {
-  color: #D4764E;
+  color: #3B82F6;
   flex-shrink: 0;
 }
 
 .section-header h3 {
   font-size: 13px;
   font-weight: 600;
-  color: #2D2A26;
+  color: #1E293B;
   letter-spacing: 0.2px;
 }
 
-/* ===== 处理按钮 ===== */
+/* 处理按钮 */
 .action-area {
   margin-top: auto;
   padding-top: 8px;
@@ -333,20 +326,20 @@ async function handleProcess() {
   font-weight: 600;
   cursor: pointer;
   transition: all 0.25s ease;
-  background: #D0CCC8;
-  color: #8A8580;
+  background: #CBD5E1;
+  color: #64748B;
   letter-spacing: 0.3px;
 }
 
 .process-btn.active {
-  background: linear-gradient(135deg, #D4764E, #C06840);
+  background: linear-gradient(135deg, #3B82F6, #2563EB);
   color: white;
-  box-shadow: 0 4px 16px rgba(212, 118, 78, 0.3);
+  box-shadow: 0 4px 16px rgba(59, 130, 246, 0.35);
 }
 
 .process-btn.active:hover {
   transform: translateY(-1px);
-  box-shadow: 0 6px 24px rgba(212, 118, 78, 0.4);
+  box-shadow: 0 6px 24px rgba(59, 130, 246, 0.45);
 }
 
 .process-btn.active:active {
@@ -358,8 +351,8 @@ async function handleProcess() {
 }
 
 .process-btn.loading {
-  background: #D0CCC8;
-  color: #8A8580;
+  background: #CBD5E1;
+  color: #64748B;
   cursor: wait;
 }
 
@@ -372,7 +365,7 @@ async function handleProcess() {
   to { transform: rotate(360deg); }
 }
 
-/* ===== 右侧面板 ===== */
+/* 右侧面板 */
 .panel-right {
   flex: 1;
   padding: 20px;

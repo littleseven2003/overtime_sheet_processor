@@ -1,6 +1,4 @@
-use calamine::{open_workbook_auto_from_rs, Reader, DataType};
-use std::fs::File;
-use std::io::BufReader;
+use calamine::{open_workbook_auto, Data, Reader};
 use std::path::Path;
 
 use crate::models::FileMeta;
@@ -18,8 +16,7 @@ pub fn read_excel_meta(file_path: &str) -> Result<FileMeta, String> {
         .to_string_lossy()
         .to_string();
 
-    let file = File::open(path).map_err(|e| format!("打开文件失败: {}", e))?;
-    let mut reader = open_workbook_auto_from_rs(BufReader::new(file))
+    let mut reader = open_workbook_auto(path)
         .map_err(|e| format!("读取 Excel 文件失败: {}", e))?;
 
     let sheet_names = reader.sheet_names().to_vec();
@@ -30,7 +27,6 @@ pub fn read_excel_meta(file_path: &str) -> Result<FileMeta, String> {
     let first_sheet = &sheet_names[0];
     let range = reader
         .worksheet_range(first_sheet)
-        .ok_or("无法读取工作表")?
         .map_err(|e| format!("工作表读取错误: {}", e))?;
 
     let mut labs: Vec<String> = Vec::new();
@@ -42,7 +38,7 @@ pub fn read_excel_meta(file_path: &str) -> Result<FileMeta, String> {
 
     for (row_idx, row) in range.rows().enumerate() {
         for (col_idx, cell) in row.iter().enumerate() {
-            if let DataType::String(s) = cell {
+            if let Data::String(s) = cell {
                 if s.trim() == "研究室" {
                     header_row = Some(row_idx);
                     lab_col = Some(col_idx);
@@ -61,7 +57,7 @@ pub fn read_excel_meta(file_path: &str) -> Result<FileMeta, String> {
     // 遍历数据行，收集研究室列表
     for row in range.rows().skip(header_row + 1) {
         if let Some(cell) = row.get(lab_col) {
-            if let DataType::String(lab) = cell {
+            if let Data::String(lab) = cell {
                 let lab = lab.trim().to_string();
                 if !lab.is_empty() && !labs.contains(&lab) {
                     labs.push(lab);
@@ -85,15 +81,13 @@ pub fn read_excel_data(
     selected_labs: &[String],
 ) -> Result<Vec<(String, String, String, String)>, String> {
     let path = Path::new(file_path);
-    let file = File::open(path).map_err(|e| format!("打开文件失败: {}", e))?;
-    let mut reader = open_workbook_auto_from_rs(BufReader::new(file))
+    let mut reader = open_workbook_auto(path)
         .map_err(|e| format!("读取 Excel 文件失败: {}", e))?;
 
     let sheet_names = reader.sheet_names().to_vec();
     let first_sheet = &sheet_names[0];
     let range = reader
         .worksheet_range(first_sheet)
-        .ok_or("无法读取工作表")?
         .map_err(|e| format!("工作表读取错误: {}", e))?;
 
     // 找表头
@@ -102,7 +96,7 @@ pub fn read_excel_data(
 
     for (row_idx, row) in range.rows().enumerate() {
         for (col_idx, cell) in row.iter().enumerate() {
-            if let DataType::String(s) = cell {
+            if let Data::String(s) = cell {
                 col_map.insert(s.trim().to_string(), col_idx);
             }
         }
@@ -142,12 +136,12 @@ pub fn read_excel_data(
 }
 
 /// 从行中获取字符串单元格值
-fn get_string_cell(row: &[DataType], col: usize) -> String {
+fn get_string_cell(row: &[Data], col: usize) -> String {
     row.get(col)
         .and_then(|cell| match cell {
-            DataType::String(s) => Some(s.trim().to_string()),
-            DataType::Float(f) => Some(f.to_string()),
-            DataType::Int(i) => Some(i.to_string()),
+            Data::String(s) => Some(s.trim().to_string()),
+            Data::Float(f) => Some(f.to_string()),
+            Data::Int(i) => Some(i.to_string()),
             _ => None,
         })
         .unwrap_or_default()

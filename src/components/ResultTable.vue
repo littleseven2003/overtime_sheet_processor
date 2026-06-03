@@ -94,9 +94,9 @@ const columns: DataTableColumns<ResultRow> = [
 .result-card {
   display: flex;
   flex-direction: column;
-  background: rgb(255, 255, 255);
-  border: 1px solid rgb(226, 243, 249);
-  box-shadow: 0 8px 24px rgba(59, 175, 218, 0.12);
+  background: var(--color-panel);
+  border: 1px solid var(--color-line);
+  box-shadow: var(--shadow-panel);
   border-radius: 16px;
   overflow: hidden;
   max-height: 280px;
@@ -107,24 +107,24 @@ const columns: DataTableColumns<ResultRow> = [
   align-items: center;
   gap: 8px;
   padding: 14px 20px;
-  border-bottom: 1px solid rgb(235, 247, 252);
+  border-bottom: 1px solid var(--color-line);
   flex-shrink: 0;
 }
 
 .card-header svg {
-  color: #5DD9A8;
+  color: var(--color-success);
 }
 
 .card-header h3 {
   font-size: 14px;
   font-weight: 600;
-  color: rgb(30, 70, 88);
+  color: var(--color-ink);
 }
 
 .result-count {
   margin-left: auto;
   font-size: 12px;
-  color: #9ECFDF;
+  color: var(--color-faint);
 }
 
 .result-body {

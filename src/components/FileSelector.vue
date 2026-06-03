@@ -67,45 +67,45 @@ async function selectFile() {
   align-items: center;
   gap: 14px;
   padding: 16px;
-  border: 2px dashed #C0E4F0;
+  border: 2px dashed var(--color-line);
   border-radius: 12px;
   cursor: pointer;
   transition: all 0.2s ease;
-  background: rgb(244, 250, 253);
+  background: var(--color-panel-soft);
 }
 
 .drop-zone:hover {
-  border-color: rgb(59, 175, 218);
-  background: rgb(230, 246, 252);
+  border-color: var(--color-brand);
+  background: var(--color-brand-soft);
 }
 
 .drop-zone.dragging {
-  border-color: rgb(59, 175, 218);
-  background: rgb(220, 242, 250);
+  border-color: var(--color-brand);
+  background: var(--color-brand-soft);
 }
 
 .drop-zone.selected {
   border-style: solid;
-  border-color: rgb(59, 175, 218);
-  background: rgb(240, 249, 253);
+  border-color: var(--color-brand);
+  background: var(--color-brand-soft);
 }
 
 .drop-icon {
   width: 48px;
   height: 48px;
   border-radius: 12px;
-  background: rgb(230, 246, 252);
+  background: var(--color-brand-soft);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #8ECFDF;
+  color: var(--color-brand);
   flex-shrink: 0;
   transition: all 0.2s ease;
 }
 
 .drop-zone:hover .drop-icon {
-  background: rgb(210, 238, 248);
-  color: rgb(59, 175, 218);
+  background: var(--color-brand);
+  color: white;
 }
 
 .drop-text {
@@ -117,19 +117,19 @@ async function selectFile() {
 .drop-primary {
   font-size: 14px;
   font-weight: 500;
-  color: rgb(30, 70, 88);
+  color: var(--color-ink);
 }
 
 .drop-secondary {
   font-size: 12px;
-  color: #9ECFDF;
+  color: var(--color-faint);
 }
 
 .file-icon {
   width: 48px;
   height: 48px;
   border-radius: 12px;
-  background: rgb(59, 175, 218);
+  background: var(--color-brand);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -147,7 +147,7 @@ async function selectFile() {
 .file-name {
   font-size: 14px;
   font-weight: 500;
-  color: rgb(30, 70, 88);
+  color: var(--color-ink);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -155,7 +155,7 @@ async function selectFile() {
 
 .file-change {
   font-size: 12px;
-  color: rgb(59, 175, 218);
+  color: var(--color-brand);
   cursor: pointer;
 }
 </style>

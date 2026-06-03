@@ -193,8 +193,8 @@ async function handleProcess() {
   align-items: center;
   justify-content: space-between;
   padding: 14px 28px;
-  background: linear-gradient(90deg, rgb(223, 244, 251), rgb(245, 251, 254));
-  border-bottom: 1px solid rgb(216, 238, 246);
+  background: var(--color-panel);
+  border-bottom: 1px solid var(--color-line);
   flex-shrink: 0;
 }
 
@@ -207,7 +207,7 @@ async function handleProcess() {
 .app-icon {
   width: 38px;
   height: 38px;
-  background: rgb(59, 175, 218);
+  background: var(--color-brand);
   border-radius: 10px;
   display: flex;
   align-items: center;
@@ -220,13 +220,13 @@ async function handleProcess() {
   font-family: "Fraunces", serif;
   font-size: 19px;
   font-weight: 600;
-  color: rgb(30, 70, 88);
+  color: var(--color-ink);
   line-height: 1.2;
 }
 
 .header-subtitle {
   font-size: 12px;
-  color: rgb(130, 175, 190);
+  color: var(--color-faint);
 }
 
 .header-right {
@@ -239,10 +239,10 @@ async function handleProcess() {
   align-items: center;
   gap: 8px;
   padding: 5px 14px;
-  background: rgba(59, 175, 218, 0.1);
+  background: var(--color-brand-soft);
   border-radius: 20px;
   font-size: 12px;
-  color: rgb(59, 140, 170);
+  color: var(--color-brand);
   font-weight: 500;
 }
 
@@ -250,8 +250,8 @@ async function handleProcess() {
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: #5DD9A8;
-  box-shadow: 0 0 6px rgba(93, 217, 168, 0.5);
+  background: var(--color-success);
+  box-shadow: 0 0 6px rgba(8, 145, 178, 0.5);
 }
 
 /* 主内容区 */
@@ -270,15 +270,15 @@ async function handleProcess() {
   flex-direction: column;
   gap: 16px;
   overflow-y: auto;
-  background: rgb(230, 246, 252);
-  border-right: 1px solid rgb(205, 235, 245);
+  background: var(--color-panel-soft);
+  border-right: 1px solid var(--color-line);
 }
 
 /* 卡片 */
 .card {
-  background: rgb(255, 255, 255);
-  border: 1px solid rgb(226, 243, 249);
-  box-shadow: 0 8px 24px rgba(59, 175, 218, 0.12);
+  background: var(--color-panel);
+  border: 1px solid var(--color-line);
+  box-shadow: var(--shadow-panel);
   border-radius: 16px;
   padding: 18px;
 }
@@ -291,14 +291,14 @@ async function handleProcess() {
 }
 
 .card-icon {
-  color: rgb(59, 175, 218);
+  color: var(--color-brand);
   flex-shrink: 0;
 }
 
 .card-header h3 {
   font-size: 14px;
   font-weight: 600;
-  color: rgb(30, 70, 88);
+  color: var(--color-ink);
 }
 
 /* 处理按钮 */
@@ -321,21 +321,21 @@ async function handleProcess() {
   font-weight: 600;
   cursor: pointer;
   transition: all 0.25s ease;
-  background: #D5EBF3;
-  color: #A8D4E6;
+  background: var(--color-brand-soft);
+  color: var(--color-faint);
   letter-spacing: 0.3px;
 }
 
 .btn-process.active {
-  background: rgb(59, 175, 218);
+  background: var(--color-brand);
   color: white;
-  box-shadow: 0 6px 20px rgba(59, 175, 218, 0.35);
+  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.35);
 }
 
 .btn-process.active:hover {
-  background: rgb(47, 159, 204);
+  background: var(--color-brand-strong);
   transform: translateY(-1px);
-  box-shadow: 0 8px 28px rgba(59, 175, 218, 0.45);
+  box-shadow: 0 8px 28px rgba(37, 99, 235, 0.45);
 }
 
 .btn-process.active:active {
@@ -347,8 +347,8 @@ async function handleProcess() {
 }
 
 .btn-process.loading {
-  background: #D5EBF3;
-  color: #A8D4E6;
+  background: var(--color-brand-soft);
+  color: var(--color-faint);
   cursor: wait;
 }
 

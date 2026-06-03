@@ -21,22 +21,22 @@ watch(
 function getLevelColor(level: string) {
   switch (level) {
     case "success":
-      return "#5DD9A8";
+      return "#0891b2";
     case "error":
-      return "#F5A0A0";
+      return "#dc2626";
     default:
-      return "#8ECFDF";
+      return "#60a5fa";
   }
 }
 
 function getLevelBg(level: string) {
   switch (level) {
     case "success":
-      return "rgba(93, 217, 168, 0.15)";
+      return "rgba(8, 145, 178, 0.15)";
     case "error":
-      return "rgba(245, 160, 160, 0.15)";
+      return "rgba(220, 38, 38, 0.15)";
     default:
-      return "rgba(142, 207, 223, 0.15)";
+      return "rgba(96, 165, 250, 0.15)";
   }
 }
 </script>
@@ -84,9 +84,9 @@ function getLevelBg(level: string) {
   flex: 1;
   display: flex;
   flex-direction: column;
-  background: rgb(255, 255, 255);
-  border: 1px solid rgb(226, 243, 249);
-  box-shadow: 0 8px 24px rgba(59, 175, 218, 0.12);
+  background: var(--color-panel);
+  border: 1px solid var(--color-line);
+  box-shadow: var(--shadow-panel);
   border-radius: 16px;
   overflow: hidden;
   min-height: 0;
@@ -97,26 +97,26 @@ function getLevelBg(level: string) {
   align-items: center;
   gap: 8px;
   padding: 16px 20px;
-  border-bottom: 1px solid rgb(235, 247, 252);
+  border-bottom: 1px solid var(--color-line);
   flex-shrink: 0;
 }
 
 .card-header svg {
-  color: rgb(59, 175, 218);
+  color: var(--color-brand);
 }
 
 .card-header h3 {
   font-size: 14px;
   font-weight: 600;
-  color: rgb(30, 70, 88);
+  color: var(--color-ink);
 }
 
 .log-count {
   margin-left: auto;
   font-size: 11px;
   font-weight: 600;
-  color: rgb(59, 175, 218);
-  background: rgba(59, 175, 218, 0.12);
+  color: var(--color-brand);
+  background: var(--color-brand-soft);
   padding: 2px 10px;
   border-radius: 12px;
 }
@@ -128,7 +128,7 @@ function getLevelBg(level: string) {
   font-family: "SF Mono", "Consolas", "Monaco", monospace;
   font-size: 12.5px;
   line-height: 1.7;
-  background: rgb(25, 55, 72);
+  background: #0f172a;
 }
 
 .log-empty {
@@ -138,13 +138,13 @@ function getLevelBg(level: string) {
   justify-content: center;
   gap: 12px;
   height: 100%;
-  color: #3A6A80;
+  color: #334155;
 }
 
 .log-empty span {
   font-family: "DM Sans", sans-serif;
   font-size: 13px;
-  color: #5A8FA5;
+  color: #475569;
 }
 
 .log-line {
@@ -172,14 +172,14 @@ function getLevelBg(level: string) {
 }
 
 .log-time {
-  color: #5A8FA5;
+  color: #475569;
   font-size: 11px;
   min-width: 60px;
   flex-shrink: 0;
 }
 
 .log-msg {
-  color: #B0DAE8;
+  color: #94a3b8;
   word-break: break-all;
 }
 </style>

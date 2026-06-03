@@ -23,35 +23,22 @@ export default defineComponent({
     return {
       themeOverrides: {
         common: {
-          primaryColor: "#3B82F6",
-          primaryColorHover: "#2563EB",
-          primaryColorPressed: "#1D4ED8",
-          primaryColorSuppl: "#3B82F6",
+          primaryColor: "#60A5FA",
+          primaryColorHover: "#3B82F6",
+          primaryColorPressed: "#2563EB",
+          primaryColorSuppl: "#60A5FA",
           borderRadius: "8px",
           borderRadiusSmall: "6px",
           fontFamily: "'DM Sans', 'Microsoft YaHei', sans-serif",
-          fontSize: "14px",
-          fontSizeMini: "12px",
-          fontSizeSmall: "13px",
-          fontSizeMedium: "14px",
-          fontSizeLarge: "15px",
-          heightMedium: "38px",
-          heightSmall: "32px",
         },
         Button: {
           borderRadiusMedium: "8px",
           borderRadiusSmall: "6px",
-          fontWeight: "500",
         },
         Card: {
           borderRadius: "12px",
           paddingMedium: "20px",
           paddingSmall: "16px",
-          titleFontSizeSmall: "14px",
-          titleFontWeight: "600",
-        },
-        Tag: {
-          borderRadius: "6px",
         },
       },
     };
@@ -70,8 +57,8 @@ export default defineComponent({
 
 body {
   font-family: "DM Sans", "Microsoft YaHei", "PingFang SC", sans-serif;
-  background-color: #F0F4F8;
-  color: #1E293B;
+  background-color: #F0F7FF;
+  color: #1E3A5F;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow: hidden;
@@ -86,11 +73,11 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #CBD5E1;
+  background: #BFDBFE;
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #94A3B8;
+  background: #93C5FD;
 }
 </style>

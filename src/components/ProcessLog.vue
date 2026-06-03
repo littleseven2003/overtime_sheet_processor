@@ -21,22 +21,22 @@ watch(
 function getLevelColor(level: string) {
   switch (level) {
     case "success":
-      return "#22C55E";
+      return "#4ADE80";
     case "error":
-      return "#EF4444";
+      return "#F87171";
     default:
-      return "#60A5FA";
+      return "#93C5FD";
   }
 }
 
 function getLevelBg(level: string) {
   switch (level) {
     case "success":
-      return "rgba(34, 197, 94, 0.12)";
+      return "rgba(74, 222, 128, 0.15)";
     case "error":
-      return "rgba(239, 68, 68, 0.12)";
+      return "rgba(248, 113, 113, 0.15)";
     default:
-      return "rgba(96, 165, 250, 0.12)";
+      return "rgba(147, 197, 253, 0.15)";
   }
 }
 </script>
@@ -86,9 +86,10 @@ function getLevelBg(level: string) {
   flex-direction: column;
   background: white;
   border-radius: 12px;
-  border: 1px solid #E2E8F0;
+  border: 1px solid #DBEAFE;
   overflow: hidden;
   min-height: 0;
+  box-shadow: 0 1px 3px rgba(59, 130, 246, 0.06);
 }
 
 .log-header {
@@ -96,13 +97,13 @@ function getLevelBg(level: string) {
   align-items: center;
   gap: 8px;
   padding: 14px 18px;
-  border-bottom: 1px solid #F1F5F9;
-  color: #1E293B;
+  border-bottom: 1px solid #EFF6FF;
+  color: #1E3A5F;
   flex-shrink: 0;
 }
 
 .log-header svg {
-  color: #3B82F6;
+  color: #60A5FA;
 }
 
 .log-header h3 {
@@ -114,8 +115,8 @@ function getLevelBg(level: string) {
   margin-left: auto;
   font-size: 11px;
   font-weight: 600;
-  color: #3B82F6;
-  background: rgba(59, 130, 246, 0.1);
+  color: #60A5FA;
+  background: rgba(96, 165, 250, 0.12);
   padding: 2px 8px;
   border-radius: 10px;
 }
@@ -127,7 +128,7 @@ function getLevelBg(level: string) {
   font-family: "SF Mono", "Consolas", "Monaco", monospace;
   font-size: 12.5px;
   line-height: 1.7;
-  background: #1E293B;
+  background: #1E3A5F;
 }
 
 .log-empty {
@@ -137,13 +138,13 @@ function getLevelBg(level: string) {
   justify-content: center;
   gap: 12px;
   height: 100%;
-  color: #475569;
+  color: #3B6A8F;
 }
 
 .log-empty span {
   font-family: "DM Sans", sans-serif;
   font-size: 13px;
-  color: #64748B;
+  color: #5A8AB5;
 }
 
 .log-line {
@@ -171,14 +172,14 @@ function getLevelBg(level: string) {
 }
 
 .log-time {
-  color: #64748B;
+  color: #5A8AB5;
   font-size: 11px;
   min-width: 60px;
   flex-shrink: 0;
 }
 
 .log-msg {
-  color: #CBD5E1;
+  color: #BFDBFE;
   word-break: break-all;
 }
 </style>

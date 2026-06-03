@@ -105,7 +105,6 @@ async function handleProcess() {
 
 <template>
   <div class="app-layout">
-    <!-- 顶部标题栏 -->
     <header class="app-header">
       <div class="header-left">
         <div class="app-icon">
@@ -130,9 +129,7 @@ async function handleProcess() {
       </div>
     </header>
 
-    <!-- 主内容区 -->
     <main class="app-main">
-      <!-- 左侧操作面板 -->
       <aside class="panel-left">
         <section class="section">
           <div class="section-header">
@@ -175,7 +172,6 @@ async function handleProcess() {
         </div>
       </aside>
 
-      <!-- 右侧日志和结果 -->
       <section class="panel-right">
         <ProcessLog :logs="logs" />
         <ResultTable v-if="resultData.length > 0" :data="resultData" />
@@ -189,17 +185,16 @@ async function handleProcess() {
   height: 100vh;
   display: flex;
   flex-direction: column;
-  background-color: #F0F4F8;
+  background-color: #F0F7FF;
 }
 
-/* 顶部标题栏 */
 .app-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 16px 28px;
-  background: linear-gradient(135deg, #1E293B 0%, #334155 100%);
-  color: #F1F5F9;
+  background: linear-gradient(135deg, #60A5FA 0%, #3B82F6 100%);
+  color: white;
   flex-shrink: 0;
 }
 
@@ -212,7 +207,7 @@ async function handleProcess() {
 .app-icon {
   width: 40px;
   height: 40px;
-  background: linear-gradient(135deg, #3B82F6, #60A5FA);
+  background: rgba(255, 255, 255, 0.2);
   border-radius: 10px;
   display: flex;
   align-items: center;
@@ -231,7 +226,7 @@ async function handleProcess() {
 
 .header-subtitle {
   font-size: 12px;
-  color: #94A3B8;
+  color: rgba(255, 255, 255, 0.7);
   letter-spacing: 0.3px;
 }
 
@@ -245,21 +240,20 @@ async function handleProcess() {
   align-items: center;
   gap: 8px;
   padding: 6px 14px;
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.2);
   border-radius: 20px;
   font-size: 13px;
-  color: #CBD5E1;
+  color: rgba(255, 255, 255, 0.9);
 }
 
 .status-dot {
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: #22C55E;
-  box-shadow: 0 0 6px rgba(34, 197, 94, 0.5);
+  background: #86EFAC;
+  box-shadow: 0 0 6px rgba(134, 239, 172, 0.6);
 }
 
-/* 主内容区 */
 .app-main {
   flex: 1;
   display: flex;
@@ -267,7 +261,6 @@ async function handleProcess() {
   overflow: hidden;
 }
 
-/* 左侧面板 */
 .panel-left {
   width: 340px;
   min-width: 340px;
@@ -276,15 +269,16 @@ async function handleProcess() {
   flex-direction: column;
   gap: 16px;
   overflow-y: auto;
-  border-right: 1px solid #E2E8F0;
-  background: #F8FAFC;
+  border-right: 1px solid #DBEAFE;
+  background: #F8FBFF;
 }
 
 .section {
   background: white;
   border-radius: 12px;
   padding: 16px;
-  border: 1px solid #E2E8F0;
+  border: 1px solid #DBEAFE;
+  box-shadow: 0 1px 3px rgba(59, 130, 246, 0.06);
 }
 
 .section-header {
@@ -295,18 +289,17 @@ async function handleProcess() {
 }
 
 .section-icon {
-  color: #3B82F6;
+  color: #60A5FA;
   flex-shrink: 0;
 }
 
 .section-header h3 {
   font-size: 13px;
   font-weight: 600;
-  color: #1E293B;
+  color: #1E3A5F;
   letter-spacing: 0.2px;
 }
 
-/* 处理按钮 */
 .action-area {
   margin-top: auto;
   padding-top: 8px;
@@ -326,20 +319,20 @@ async function handleProcess() {
   font-weight: 600;
   cursor: pointer;
   transition: all 0.25s ease;
-  background: #CBD5E1;
-  color: #64748B;
+  background: #DBEAFE;
+  color: #93C5FD;
   letter-spacing: 0.3px;
 }
 
 .process-btn.active {
-  background: linear-gradient(135deg, #3B82F6, #2563EB);
+  background: linear-gradient(135deg, #60A5FA, #3B82F6);
   color: white;
-  box-shadow: 0 4px 16px rgba(59, 130, 246, 0.35);
+  box-shadow: 0 4px 16px rgba(96, 165, 250, 0.4);
 }
 
 .process-btn.active:hover {
   transform: translateY(-1px);
-  box-shadow: 0 6px 24px rgba(59, 130, 246, 0.45);
+  box-shadow: 0 6px 24px rgba(96, 165, 250, 0.5);
 }
 
 .process-btn.active:active {
@@ -351,8 +344,8 @@ async function handleProcess() {
 }
 
 .process-btn.loading {
-  background: #CBD5E1;
-  color: #64748B;
+  background: #DBEAFE;
+  color: #93C5FD;
   cursor: wait;
 }
 
@@ -365,7 +358,6 @@ async function handleProcess() {
   to { transform: rotate(360deg); }
 }
 
-/* 右侧面板 */
 .panel-right {
   flex: 1;
   padding: 20px;

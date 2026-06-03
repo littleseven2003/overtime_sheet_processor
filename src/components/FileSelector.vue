@@ -67,26 +67,26 @@ async function selectFile() {
   align-items: center;
   gap: 14px;
   padding: 16px;
-  border: 2px dashed #CBD5E1;
+  border: 2px dashed #BFDBFE;
   border-radius: 10px;
   cursor: pointer;
   transition: all 0.2s ease;
-  background: #F8FAFC;
+  background: #F8FBFF;
 }
 
 .drop-zone:hover {
-  border-color: #3B82F6;
+  border-color: #60A5FA;
   background: #EFF6FF;
 }
 
 .drop-zone.dragging {
-  border-color: #3B82F6;
+  border-color: #60A5FA;
   background: #DBEAFE;
 }
 
 .drop-zone.selected {
   border-style: solid;
-  border-color: #3B82F6;
+  border-color: #60A5FA;
   background: #EFF6FF;
 }
 
@@ -94,18 +94,18 @@ async function selectFile() {
   width: 48px;
   height: 48px;
   border-radius: 10px;
-  background: #F1F5F9;
+  background: #EFF6FF;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #94A3B8;
+  color: #93C5FD;
   flex-shrink: 0;
   transition: all 0.2s ease;
 }
 
 .drop-zone:hover .drop-icon {
   background: #DBEAFE;
-  color: #3B82F6;
+  color: #60A5FA;
 }
 
 .drop-text {
@@ -117,19 +117,19 @@ async function selectFile() {
 .drop-primary {
   font-size: 14px;
   font-weight: 500;
-  color: #1E293B;
+  color: #1E3A5F;
 }
 
 .drop-secondary {
   font-size: 12px;
-  color: #94A3B8;
+  color: #93C5FD;
 }
 
 .file-icon {
   width: 48px;
   height: 48px;
   border-radius: 10px;
-  background: linear-gradient(135deg, #3B82F6, #60A5FA);
+  background: linear-gradient(135deg, #60A5FA, #3B82F6);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -147,7 +147,7 @@ async function selectFile() {
 .file-name {
   font-size: 14px;
   font-weight: 500;
-  color: #1E293B;
+  color: #1E3A5F;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -155,7 +155,7 @@ async function selectFile() {
 
 .file-change {
   font-size: 12px;
-  color: #3B82F6;
+  color: #60A5FA;
   cursor: pointer;
 }
 </style>

@@ -96,9 +96,10 @@ const columns: DataTableColumns<ResultRow> = [
   flex-direction: column;
   background: white;
   border-radius: 12px;
-  border: 1px solid #E2E8F0;
+  border: 1px solid #DBEAFE;
   overflow: hidden;
   max-height: 280px;
+  box-shadow: 0 1px 3px rgba(59, 130, 246, 0.06);
 }
 
 .result-header {
@@ -106,13 +107,13 @@ const columns: DataTableColumns<ResultRow> = [
   align-items: center;
   gap: 8px;
   padding: 12px 18px;
-  border-bottom: 1px solid #F1F5F9;
-  color: #1E293B;
+  border-bottom: 1px solid #EFF6FF;
+  color: #1E3A5F;
   flex-shrink: 0;
 }
 
 .result-header svg {
-  color: #22C55E;
+  color: #4ADE80;
 }
 
 .result-header h3 {
@@ -123,7 +124,7 @@ const columns: DataTableColumns<ResultRow> = [
 .result-count {
   margin-left: auto;
   font-size: 12px;
-  color: #94A3B8;
+  color: #93C5FD;
 }
 
 .result-body {

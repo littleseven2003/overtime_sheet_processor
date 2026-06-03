@@ -17,7 +17,8 @@ pub fn process_records(
 
     for (name, overtime_raw, reward, lab) in raw_data {
         let formatted_overtime = format_overtime_records(overtime_raw);
-        if formatted_overtime.is_empty() {
+        // 跳过空记录或包含"无"的记录
+        if formatted_overtime.is_empty() || formatted_overtime.contains("无") {
             continue;
         }
 

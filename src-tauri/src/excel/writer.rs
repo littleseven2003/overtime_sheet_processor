@@ -47,14 +47,14 @@ pub fn write_excel(output_path: &str, records: &[OvertimeRecord]) -> Result<(), 
             .map_err(|e| format!("写入表头失败: {}", e))?;
     }
 
-    // 设置列宽
-    worksheet.set_column_width(0, 8.0).ok();   // 序号
-    worksheet.set_column_width(1, 16.0).ok();  // 奖惩项点
-    worksheet.set_column_width(2, 25.0).ok();  // 奖惩明细
-    worksheet.set_column_width(3, 16.0).ok();  // 建议奖励金额
-    worksheet.set_column_width(4, 16.0).ok();  // 建议处罚金额
-    worksheet.set_column_width(5, 12.0).ok();  // 涉及人员
-    worksheet.set_column_width(6, 20.0).ok();  // 开发室
+    // 设置列宽（根据内容自适应）
+    worksheet.set_column_width(0, 6.0).ok();   // 序号 - 仅数字"1"
+    worksheet.set_column_width(1, 14.0).ok();  // 奖惩项点 - "节假日交通奖励"
+    worksheet.set_column_width(2, 18.0).ok();  // 奖惩明细 - "5月2日加班"等
+    worksheet.set_column_width(3, 14.0).ok();  // 建议奖励金额 - 数字
+    worksheet.set_column_width(4, 14.0).ok();  // 建议处罚金额 - 空或数字
+    worksheet.set_column_width(5, 10.0).ok();  // 涉及人员 - 3个汉字
+    worksheet.set_column_width(6, 16.0).ok();  // 开发室 - "智能通信研究室"
 
     // 按研究室分组
     let mut groups: Vec<(String, Vec<&OvertimeRecord>)> = Vec::new();
@@ -125,9 +125,9 @@ pub fn write_excel(output_path: &str, records: &[OvertimeRecord]) -> Result<(), 
                 .write_string_with_format(row, 6, &lab_full, &body_format)
                 .ok();
 
-            // 计算行高（基于换行数）
+            // 计算行高（基于换行数，每行约20pt高度）
             let newline_count = record.overtime_records.matches('\n').count() as u32;
-            let row_height = 15.0 * (newline_count + 1) as f64;
+            let row_height = 20.0 * (newline_count + 1) as f64;
             worksheet.set_row_height(row, row_height).ok();
 
             current_row += 1;

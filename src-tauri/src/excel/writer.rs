@@ -129,22 +129,22 @@ pub fn write_excel(output_path: &str, records: &[OvertimeRecord]) -> Result<(), 
             current_row += 1;
         }
 
-        // 合并序号列（如果有多行）
-        if group_records.len() > 1 {
+        // 合并序号列
+        if current_row - 1 > group_start_row {
             worksheet
                 .merge_range(group_start_row, 0, current_row - 1, 0, &seq.to_string(), &body_format)
                 .ok();
         }
 
-        // 合并奖惩项点列（如果有多行）
-        if group_records.len() > 1 {
+        // 合并奖惩项点列
+        if current_row - 1 > group_start_row {
             worksheet
                 .merge_range(group_start_row, 1, current_row - 1, 1, "节假日交通奖励", &body_format)
                 .ok();
         }
 
-        // 合并开发室列（如果有多行）
-        if group_records.len() > 1 {
+        // 合并开发室列
+        if current_row - 1 > group_start_row {
             worksheet
                 .merge_range(group_start_row, 6, current_row - 1, 6, &lab_full, &body_format)
                 .ok();

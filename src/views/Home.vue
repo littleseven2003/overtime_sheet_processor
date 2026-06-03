@@ -37,6 +37,7 @@ const resultData = ref<
     name: string;
     overtimeRecords: string;
     reward: string;
+    penalty: string;
   }>
 >([]);
 

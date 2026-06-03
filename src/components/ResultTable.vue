@@ -10,6 +10,7 @@ interface ResultRow {
   name: string;
   overtimeRecords: string;
   reward: string;
+  penalty: string;
 }
 
 const props = defineProps<{
@@ -30,21 +31,9 @@ const columns: DataTableColumns<ResultRow> = [
     align: "center",
   },
   {
-    title: "开发室",
-    key: "lab",
-    width: 160,
-    align: "center",
-  },
-  {
-    title: "涉及人员",
-    key: "name",
-    width: 100,
-    align: "center",
-  },
-  {
-    title: "周末加班记录",
+    title: "奖惩明细",
     key: "overtimeRecords",
-    width: 220,
+    width: 200,
     align: "center",
     render(row) {
       const lines = row.overtimeRecords.split("\n");
@@ -54,7 +43,25 @@ const columns: DataTableColumns<ResultRow> = [
   {
     title: "建议奖励金额",
     key: "reward",
-    width: 140,
+    width: 120,
+    align: "center",
+  },
+  {
+    title: "建议处罚金额",
+    key: "penalty",
+    width: 120,
+    align: "center",
+  },
+  {
+    title: "涉及人员",
+    key: "name",
+    width: 100,
+    align: "center",
+  },
+  {
+    title: "开发室",
+    key: "lab",
+    width: 160,
     align: "center",
   },
 ];

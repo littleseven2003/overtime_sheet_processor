@@ -38,8 +38,9 @@ pub fn write_excel(output_path: &str, records: &[OvertimeRecord]) -> Result<(), 
         .set_text_wrap()
         .set_border(XlsxBorder::Thin);
 
-    // 写入表头
-    let headers = ["序号", "奖惩项点", "开发室", "涉及人员", "周末加班记录", "建议奖励金额"];
+    // 表头列名（按照目标格式）
+    // 序号 | 奖惩项点 | 奖惩明细 | 建议奖励金额 | 建议处罚金额 | 涉及人员 | 开发室
+    let headers = ["序号", "奖惩项点", "奖惩明细", "建议奖励金额", "建议处罚金额", "涉及人员", "开发室"];
     for (col, header) in headers.iter().enumerate() {
         worksheet
             .write_string(0, col as u16, header, &header_format)
@@ -49,56 +50,85 @@ pub fn write_excel(output_path: &str, records: &[OvertimeRecord]) -> Result<(), 
     // 设置列宽
     worksheet.set_column_width(0, 8.0).ok();   // 序号
     worksheet.set_column_width(1, 16.0).ok();  // 奖惩项点
-    worksheet.set_column_width(2, 20.0).ok();  // 开发室
-    worksheet.set_column_width(3, 12.0).ok();  // 涉及人员
-    worksheet.set_column_width(4, 25.0).ok();  // 周末加班记录
-    worksheet.set_column_width(5, 18.0).ok();  // 建议奖励金额
+    worksheet.set_column_width(2, 25.0).ok();  // 奖惩明细
+    worksheet.set_column_width(3, 16.0).ok();  // 建议奖励金额
+    worksheet.set_column_width(4, 16.0).ok();  // 建议处罚金额
+    worksheet.set_column_width(5, 12.0).ok();  // 涉及人员
+    worksheet.set_column_width(6, 20.0).ok();  // 开发室
+
+    // 按研究室分组
+    let mut groups: Vec<(String, Vec<&OvertimeRecord>)> = Vec::new();
+    let mut current_lab: Option<String> = None;
+    let mut current_group: Vec<&OvertimeRecord> = Vec::new();
+
+    for record in records {
+        if current_lab.as_ref() != Some(&record.lab) {
+            if let Some(lab) = current_lab.take() {
+                groups.push((lab, current_group));
+                current_group = Vec::new();
+            }
+            current_lab = Some(record.lab.clone());
+        }
+        current_group.push(record);
+    }
+    if let Some(lab) = current_lab {
+        groups.push((lab, current_group));
+    }
 
     // 写入数据行
     let mut current_row: u32 = 1;
     let mut seq: u32 = 1;
 
-    for (_idx, record) in records.iter().enumerate() {
-        let row = current_row;
-        let lab_full = format!("{}研究室", record.lab);
+    for (lab, group_records) in &groups {
+        let lab_full = format!("{}研究室", lab);
 
-        // 序号
-        worksheet
-            .write_number(row, 0, seq as f64, &body_format)
-            .ok();
+        for record in group_records {
+            let row = current_row;
 
-        // 奖惩项点
-        worksheet
-            .write_string(row, 1, "节假日交通奖励", &body_format)
-            .ok();
+            // 序号
+            worksheet
+                .write_number(row, 0, seq as f64, &body_format)
+                .ok();
 
-        // 开发室
-        worksheet
-            .write_string(row, 2, &lab_full, &body_format)
-            .ok();
+            // 奖惩项点
+            worksheet
+                .write_string(row, 1, "节假日交通奖励", &body_format)
+                .ok();
 
-        // 涉及人员
-        worksheet
-            .write_string(row, 3, &record.name, &body_format)
-            .ok();
+            // 奖惩明细（加班记录）
+            worksheet
+                .write_string(row, 2, &record.overtime_records, &body_format)
+                .ok();
 
-        // 周末加班记录
-        worksheet
-            .write_string(row, 4, &record.overtime_records, &body_format)
-            .ok();
+            // 建议奖励金额
+            worksheet
+                .write_string(row, 3, &record.total_reward, &body_format)
+                .ok();
 
-        // 建议奖励金额
-        worksheet
-            .write_string(row, 5, &record.total_reward, &body_format)
-            .ok();
+            // 建议处罚金额（空）
+            worksheet
+                .write_string(row, 4, "", &body_format)
+                .ok();
 
-        // 计算行高（基于换行数）
-        let newline_count = record.overtime_records.matches('\n').count() as u32;
-        let row_height = 15.0 * (newline_count + 1) as f64;
-        worksheet.set_row_height(row, row_height).ok();
+            // 涉及人员
+            worksheet
+                .write_string(row, 5, &record.name, &body_format)
+                .ok();
+
+            // 开发室
+            worksheet
+                .write_string(row, 6, &lab_full, &body_format)
+                .ok();
+
+            // 计算行高（基于换行数）
+            let newline_count = record.overtime_records.matches('\n').count() as u32;
+            let row_height = 15.0 * (newline_count + 1) as f64;
+            worksheet.set_row_height(row, row_height).ok();
+
+            current_row += 1;
+        }
 
         seq += 1;
-        current_row += 1;
     }
 
     workbook

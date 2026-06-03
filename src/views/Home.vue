@@ -108,7 +108,7 @@ async function handleProcess() {
     <header class="app-header">
       <div class="header-left">
         <div class="app-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
             <polyline points="14 2 14 8 20 8"/>
             <line x1="16" y1="13" x2="8" y2="13"/>
@@ -130,10 +130,10 @@ async function handleProcess() {
     </header>
 
     <main class="app-main">
-      <aside class="panel-left">
-        <section class="section">
-          <div class="section-header">
-            <svg class="section-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <aside class="sidebar">
+        <section class="card">
+          <div class="card-header">
+            <svg class="card-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
             </svg>
             <h3>数据源文件</h3>
@@ -141,9 +141,9 @@ async function handleProcess() {
           <FileSelector @file-selected="onFileSelected" />
         </section>
 
-        <section v-if="fileMeta && fileMeta.labs.length > 0" class="section">
-          <div class="section-header">
-            <svg class="section-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <section v-if="fileMeta && fileMeta.labs.length > 0" class="card">
+          <div class="card-header">
+            <svg class="card-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
               <circle cx="9" cy="7" r="4"/>
               <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
@@ -156,7 +156,7 @@ async function handleProcess() {
 
         <div class="action-area">
           <button
-            class="process-btn"
+            class="btn-process"
             :class="{ active: !processing && fileMeta && selectedLabs.length > 0, loading: processing }"
             :disabled="!fileMeta || selectedLabs.length === 0 || processing"
             @click="handleProcess"
@@ -172,7 +172,7 @@ async function handleProcess() {
         </div>
       </aside>
 
-      <section class="panel-right">
+      <section class="content">
         <ProcessLog :logs="logs" />
         <ResultTable v-if="resultData.length > 0" :data="resultData" />
       </section>
@@ -185,16 +185,16 @@ async function handleProcess() {
   height: 100vh;
   display: flex;
   flex-direction: column;
-  background-color: #F0F7FF;
 }
 
+/* 顶部标题栏 */
 .app-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 28px;
-  background: linear-gradient(135deg, #60A5FA 0%, #3B82F6 100%);
-  color: white;
+  padding: 14px 28px;
+  background: linear-gradient(90deg, rgb(223, 244, 251), rgb(245, 251, 254));
+  border-bottom: 1px solid rgb(216, 238, 246);
   flex-shrink: 0;
 }
 
@@ -205,9 +205,9 @@ async function handleProcess() {
 }
 
 .app-icon {
-  width: 40px;
-  height: 40px;
-  background: rgba(255, 255, 255, 0.2);
+  width: 38px;
+  height: 38px;
+  background: rgb(59, 175, 218);
   border-radius: 10px;
   display: flex;
   align-items: center;
@@ -218,16 +218,15 @@ async function handleProcess() {
 
 .header-text h1 {
   font-family: "Fraunces", serif;
-  font-size: 20px;
+  font-size: 19px;
   font-weight: 600;
-  letter-spacing: 0.5px;
+  color: rgb(30, 70, 88);
   line-height: 1.2;
 }
 
 .header-subtitle {
   font-size: 12px;
-  color: rgba(255, 255, 255, 0.7);
-  letter-spacing: 0.3px;
+  color: rgb(130, 175, 190);
 }
 
 .header-right {
@@ -239,29 +238,31 @@ async function handleProcess() {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 6px 14px;
-  background: rgba(255, 255, 255, 0.2);
+  padding: 5px 14px;
+  background: rgba(59, 175, 218, 0.1);
   border-radius: 20px;
-  font-size: 13px;
-  color: rgba(255, 255, 255, 0.9);
+  font-size: 12px;
+  color: rgb(59, 140, 170);
+  font-weight: 500;
 }
 
 .status-dot {
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: #86EFAC;
-  box-shadow: 0 0 6px rgba(134, 239, 172, 0.6);
+  background: #5DD9A8;
+  box-shadow: 0 0 6px rgba(93, 217, 168, 0.5);
 }
 
+/* 主内容区 */
 .app-main {
   flex: 1;
   display: flex;
-  gap: 0;
   overflow: hidden;
 }
 
-.panel-left {
+/* 左侧边栏 */
+.sidebar {
   width: 340px;
   min-width: 340px;
   padding: 20px;
@@ -269,43 +270,44 @@ async function handleProcess() {
   flex-direction: column;
   gap: 16px;
   overflow-y: auto;
-  border-right: 1px solid #DBEAFE;
-  background: #F8FBFF;
+  background: rgb(230, 246, 252);
+  border-right: 1px solid rgb(205, 235, 245);
 }
 
-.section {
-  background: white;
-  border-radius: 12px;
-  padding: 16px;
-  border: 1px solid #DBEAFE;
-  box-shadow: 0 1px 3px rgba(59, 130, 246, 0.06);
+/* 卡片 */
+.card {
+  background: rgb(255, 255, 255);
+  border: 1px solid rgb(226, 243, 249);
+  box-shadow: 0 8px 24px rgba(59, 175, 218, 0.12);
+  border-radius: 16px;
+  padding: 18px;
 }
 
-.section-header {
+.card-header {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
 }
 
-.section-icon {
-  color: #60A5FA;
+.card-icon {
+  color: rgb(59, 175, 218);
   flex-shrink: 0;
 }
 
-.section-header h3 {
-  font-size: 13px;
+.card-header h3 {
+  font-size: 14px;
   font-weight: 600;
-  color: #1E3A5F;
-  letter-spacing: 0.2px;
+  color: rgb(30, 70, 88);
 }
 
+/* 处理按钮 */
 .action-area {
   margin-top: auto;
   padding-top: 8px;
 }
 
-.process-btn {
+.btn-process {
   width: 100%;
   display: flex;
   align-items: center;
@@ -313,39 +315,40 @@ async function handleProcess() {
   gap: 10px;
   padding: 14px 24px;
   border: none;
-  border-radius: 12px;
+  border-radius: 14px;
   font-family: "DM Sans", sans-serif;
   font-size: 15px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.25s ease;
-  background: #DBEAFE;
-  color: #93C5FD;
+  background: #D5EBF3;
+  color: #A8D4E6;
   letter-spacing: 0.3px;
 }
 
-.process-btn.active {
-  background: linear-gradient(135deg, #60A5FA, #3B82F6);
+.btn-process.active {
+  background: rgb(59, 175, 218);
   color: white;
-  box-shadow: 0 4px 16px rgba(96, 165, 250, 0.4);
+  box-shadow: 0 6px 20px rgba(59, 175, 218, 0.35);
 }
 
-.process-btn.active:hover {
+.btn-process.active:hover {
+  background: rgb(47, 159, 204);
   transform: translateY(-1px);
-  box-shadow: 0 6px 24px rgba(96, 165, 250, 0.5);
+  box-shadow: 0 8px 28px rgba(59, 175, 218, 0.45);
 }
 
-.process-btn.active:active {
+.btn-process.active:active {
   transform: translateY(0);
 }
 
-.process-btn:disabled {
+.btn-process:disabled {
   cursor: not-allowed;
 }
 
-.process-btn.loading {
-  background: #DBEAFE;
-  color: #93C5FD;
+.btn-process.loading {
+  background: #D5EBF3;
+  color: #A8D4E6;
   cursor: wait;
 }
 
@@ -358,7 +361,8 @@ async function handleProcess() {
   to { transform: rotate(360deg); }
 }
 
-.panel-right {
+/* 右侧内容区 */
+.content {
   flex: 1;
   padding: 20px;
   display: flex;

@@ -68,8 +68,8 @@ const columns: DataTableColumns<ResultRow> = [
 </script>
 
 <template>
-  <div class="result-panel">
-    <div class="result-header">
+  <div class="result-card">
+    <div class="card-header">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <polyline points="9 11 12 14 22 4"/>
         <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
@@ -91,40 +91,40 @@ const columns: DataTableColumns<ResultRow> = [
 </template>
 
 <style scoped>
-.result-panel {
+.result-card {
   display: flex;
   flex-direction: column;
-  background: white;
-  border-radius: 12px;
-  border: 1px solid #DBEAFE;
+  background: rgb(255, 255, 255);
+  border: 1px solid rgb(226, 243, 249);
+  box-shadow: 0 8px 24px rgba(59, 175, 218, 0.12);
+  border-radius: 16px;
   overflow: hidden;
   max-height: 280px;
-  box-shadow: 0 1px 3px rgba(59, 130, 246, 0.06);
 }
 
-.result-header {
+.card-header {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 12px 18px;
-  border-bottom: 1px solid #EFF6FF;
-  color: #1E3A5F;
+  padding: 14px 20px;
+  border-bottom: 1px solid rgb(235, 247, 252);
   flex-shrink: 0;
 }
 
-.result-header svg {
-  color: #4ADE80;
+.card-header svg {
+  color: #5DD9A8;
 }
 
-.result-header h3 {
+.card-header h3 {
   font-size: 14px;
   font-weight: 600;
+  color: rgb(30, 70, 88);
 }
 
 .result-count {
   margin-left: auto;
   font-size: 12px;
-  color: #93C5FD;
+  color: #9ECFDF;
 }
 
 .result-body {

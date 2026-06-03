@@ -23,20 +23,20 @@ export default defineComponent({
     return {
       themeOverrides: {
         common: {
-          primaryColor: "#60A5FA",
-          primaryColorHover: "#3B82F6",
-          primaryColorPressed: "#2563EB",
-          primaryColorSuppl: "#60A5FA",
-          borderRadius: "8px",
-          borderRadiusSmall: "6px",
+          primaryColor: "#3BAFDA",
+          primaryColorHover: "#2F9FCC",
+          primaryColorPressed: "#2589B5",
+          primaryColorSuppl: "#3BAFDA",
+          borderRadius: "10px",
+          borderRadiusSmall: "8px",
           fontFamily: "'DM Sans', 'Microsoft YaHei', sans-serif",
         },
         Button: {
-          borderRadiusMedium: "8px",
-          borderRadiusSmall: "6px",
+          borderRadiusMedium: "10px",
+          borderRadiusSmall: "8px",
         },
         Card: {
-          borderRadius: "12px",
+          borderRadius: "16px",
           paddingMedium: "20px",
           paddingSmall: "16px",
         },
@@ -57,8 +57,8 @@ export default defineComponent({
 
 body {
   font-family: "DM Sans", "Microsoft YaHei", "PingFang SC", sans-serif;
-  background-color: #F0F7FF;
-  color: #1E3A5F;
+  background: rgb(244, 250, 253);
+  color: rgb(46, 90, 107);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow: hidden;
@@ -73,11 +73,11 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #BFDBFE;
+  background: #B8E0EE;
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #93C5FD;
+  background: #8ECFDF;
 }
 </style>

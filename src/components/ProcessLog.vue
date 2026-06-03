@@ -21,29 +21,29 @@ watch(
 function getLevelColor(level: string) {
   switch (level) {
     case "success":
-      return "#4ADE80";
+      return "#5DD9A8";
     case "error":
-      return "#F87171";
+      return "#F5A0A0";
     default:
-      return "#93C5FD";
+      return "#8ECFDF";
   }
 }
 
 function getLevelBg(level: string) {
   switch (level) {
     case "success":
-      return "rgba(74, 222, 128, 0.15)";
+      return "rgba(93, 217, 168, 0.15)";
     case "error":
-      return "rgba(248, 113, 113, 0.15)";
+      return "rgba(245, 160, 160, 0.15)";
     default:
-      return "rgba(147, 197, 253, 0.15)";
+      return "rgba(142, 207, 223, 0.15)";
   }
 }
 </script>
 
 <template>
-  <div class="log-panel">
-    <div class="log-header">
+  <div class="log-card">
+    <div class="card-header">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
         <polyline points="14 2 14 8 20 8"/>
@@ -55,7 +55,7 @@ function getLevelBg(level: string) {
     </div>
     <div ref="logContainer" class="log-body">
       <div v-if="logs.length === 0" class="log-empty">
-        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
           <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
           <polyline points="14 2 14 8 20 8"/>
         </svg>
@@ -80,55 +80,55 @@ function getLevelBg(level: string) {
 </template>
 
 <style scoped>
-.log-panel {
+.log-card {
   flex: 1;
   display: flex;
   flex-direction: column;
-  background: white;
-  border-radius: 12px;
-  border: 1px solid #DBEAFE;
+  background: rgb(255, 255, 255);
+  border: 1px solid rgb(226, 243, 249);
+  box-shadow: 0 8px 24px rgba(59, 175, 218, 0.12);
+  border-radius: 16px;
   overflow: hidden;
   min-height: 0;
-  box-shadow: 0 1px 3px rgba(59, 130, 246, 0.06);
 }
 
-.log-header {
+.card-header {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 14px 18px;
-  border-bottom: 1px solid #EFF6FF;
-  color: #1E3A5F;
+  padding: 16px 20px;
+  border-bottom: 1px solid rgb(235, 247, 252);
   flex-shrink: 0;
 }
 
-.log-header svg {
-  color: #60A5FA;
+.card-header svg {
+  color: rgb(59, 175, 218);
 }
 
-.log-header h3 {
+.card-header h3 {
   font-size: 14px;
   font-weight: 600;
+  color: rgb(30, 70, 88);
 }
 
 .log-count {
   margin-left: auto;
   font-size: 11px;
   font-weight: 600;
-  color: #60A5FA;
-  background: rgba(96, 165, 250, 0.12);
-  padding: 2px 8px;
-  border-radius: 10px;
+  color: rgb(59, 175, 218);
+  background: rgba(59, 175, 218, 0.12);
+  padding: 2px 10px;
+  border-radius: 12px;
 }
 
 .log-body {
   flex: 1;
   overflow-y: auto;
-  padding: 12px 16px;
+  padding: 14px 18px;
   font-family: "SF Mono", "Consolas", "Monaco", monospace;
   font-size: 12.5px;
   line-height: 1.7;
-  background: #1E3A5F;
+  background: rgb(25, 55, 72);
 }
 
 .log-empty {
@@ -138,13 +138,13 @@ function getLevelBg(level: string) {
   justify-content: center;
   gap: 12px;
   height: 100%;
-  color: #3B6A8F;
+  color: #3A6A80;
 }
 
 .log-empty span {
   font-family: "DM Sans", sans-serif;
   font-size: 13px;
-  color: #5A8AB5;
+  color: #5A8FA5;
 }
 
 .log-line {
@@ -163,23 +163,23 @@ function getLevelBg(level: string) {
 .log-badge {
   font-size: 10px;
   font-weight: 700;
-  padding: 1px 6px;
+  padding: 1px 7px;
   border-radius: 4px;
   font-family: "SF Mono", "Consolas", monospace;
-  min-width: 32px;
+  min-width: 34px;
   text-align: center;
   flex-shrink: 0;
 }
 
 .log-time {
-  color: #5A8AB5;
+  color: #5A8FA5;
   font-size: 11px;
   min-width: 60px;
   flex-shrink: 0;
 }
 
 .log-msg {
-  color: #BFDBFE;
+  color: #B0DAE8;
   word-break: break-all;
 }
 </style>

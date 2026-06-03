@@ -84,26 +84,27 @@ function isSelected(lab: string) {
   align-items: center;
   gap: 6px;
   padding: 8px 14px;
-  border: 1.5px solid #DBEAFE;
-  border-radius: 8px;
-  background: #F8FBFF;
+  border: 1.5px solid #D0E8F2;
+  border-radius: 10px;
+  background: rgb(244, 250, 253);
   font-family: "DM Sans", sans-serif;
   font-size: 13px;
   font-weight: 500;
-  color: #3B82F6;
+  color: rgb(59, 140, 170);
   cursor: pointer;
   transition: all 0.2s ease;
   white-space: nowrap;
 }
 
 .lab-chip:hover {
-  border-color: #60A5FA;
-  background: #EFF6FF;
+  border-color: rgb(59, 175, 218);
+  background: rgb(230, 246, 252);
+  color: rgb(59, 175, 218);
 }
 
 .lab-chip.selected {
-  border-color: #60A5FA;
-  background: linear-gradient(135deg, #60A5FA, #3B82F6);
+  border-color: rgb(59, 175, 218);
+  background: rgb(59, 175, 218);
   color: white;
 }
 
@@ -122,25 +123,25 @@ function isSelected(lab: string) {
   border: none;
   font-family: "DM Sans", sans-serif;
   font-size: 12px;
-  color: #93C5FD;
+  color: #9ECFDF;
   cursor: pointer;
   padding: 2px 0;
   transition: color 0.2s;
 }
 
 .link-btn:hover {
-  color: #3B82F6;
+  color: rgb(59, 175, 218);
 }
 
 .link-divider {
-  color: #BFDBFE;
+  color: #C0E4F0;
   font-size: 12px;
 }
 
 .selected-count {
   margin-left: auto;
   font-size: 12px;
-  color: #60A5FA;
+  color: rgb(59, 175, 218);
   font-weight: 500;
 }
 </style>

@@ -217,9 +217,9 @@ async function handleProcess() {
 }
 
 .header-text h1 {
-  font-family: "Fraunces", serif;
+  font-family: "DM Sans", sans-serif;
   font-size: 19px;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--color-ink);
   line-height: 1.2;
 }

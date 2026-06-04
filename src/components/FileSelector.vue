@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, onMounted, onUnmounted } from "vue";
 import { openFileDialog } from "../api/tauri";
+import { getCurrentWindow } from "@tauri-apps/api/window";
 
 const emit = defineEmits<{
   (e: "file-selected", filePath: string, fileName: string): void;
@@ -16,6 +17,37 @@ async function selectFile() {
     emit("file-selected", path, fileName.value);
   }
 }
+
+function handleDrop(paths: string[]) {
+  isDragging.value = false;
+  if (paths.length > 0) {
+    const path = paths[0];
+    const ext = path.split(".").pop()?.toLowerCase();
+    if (ext === "xlsx" || ext === "xls") {
+      fileName.value = path.split("/").pop() || path.split("\\").pop() || "";
+      emit("file-selected", path, fileName.value);
+    }
+  }
+}
+
+let unlisten: (() => void) | null = null;
+
+onMounted(async () => {
+  const appWindow = getCurrentWindow();
+  unlisten = await appWindow.onDragDropEvent((event) => {
+    if (event.payload.type === "drop") {
+      handleDrop(event.payload.paths);
+    } else if (event.payload.type === "over") {
+      isDragging.value = true;
+    } else if (event.payload.type === "leave") {
+      isDragging.value = false;
+    }
+  });
+});
+
+onUnmounted(() => {
+  unlisten?.();
+});
 </script>
 
 <template>
@@ -24,9 +56,6 @@ async function selectFile() {
       class="drop-zone"
       :class="{ dragging: isDragging, selected: fileName }"
       @click="selectFile"
-      @dragover.prevent="isDragging = true"
-      @dragleave="isDragging = false"
-      @drop.prevent="isDragging = false"
     >
       <template v-if="!fileName">
         <div class="drop-icon">
@@ -38,7 +67,7 @@ async function selectFile() {
         </div>
         <div class="drop-text">
           <span class="drop-primary">点击选择文件</span>
-          <span class="drop-secondary">支持 .xlsx / .xls 格式</span>
+          <span class="drop-secondary">支持 .xlsx / .xls 格式，也可拖拽文件到此处</span>
         </div>
       </template>
       <template v-else>
@@ -50,7 +79,7 @@ async function selectFile() {
         </div>
         <div class="file-info">
           <span class="file-name">{{ fileName }}</span>
-          <span class="file-change">点击更换文件</span>
+          <span class="file-change">点击更换文件，或拖拽新文件到此处</span>
         </div>
       </template>
     </div>
@@ -82,6 +111,8 @@ async function selectFile() {
 .drop-zone.dragging {
   border-color: var(--color-brand);
   background: var(--color-brand-soft);
+  border-style: solid;
+  transform: scale(1.01);
 }
 
 .drop-zone.selected {

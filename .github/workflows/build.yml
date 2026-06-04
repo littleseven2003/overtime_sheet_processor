@@ -11,23 +11,35 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          # Windows
+          # Windows x64
           - platform: windows-latest
             target: x86_64-pc-windows-msvc
             artifact_suffix: win-x64
 
-          # macOS
+          # Windows ARM64
+          - platform: windows-latest
+            target: aarch64-pc-windows-msvc
+            artifact_suffix: win-arm64
+
+          # macOS ARM64 (Apple Silicon)
           - platform: macos-latest
             target: aarch64-apple-darwin
             artifact_suffix: mac-arm64
+
+          # macOS Intel
           - platform: macos-13
             target: x86_64-apple-darwin
             artifact_suffix: mac-x64
 
-          # Linux
+          # Linux x64
           - platform: ubuntu-22.04
             target: x86_64-unknown-linux-gnu
             artifact_suffix: linux-x64
+
+          # Linux ARM64
+          - platform: ubuntu-22.04
+            target: aarch64-unknown-linux-gnu
+            artifact_suffix: linux-arm64
 
     runs-on: ${{ matrix.platform }}
     steps:
@@ -43,11 +55,21 @@ jobs:
         with:
           targets: ${{ matrix.target }}
 
-      - name: Install Linux dependencies
-        if: matrix.platform == 'ubuntu-22.04'
+      - name: Install Linux dependencies (x64)
+        if: matrix.platform == 'ubuntu-22.04' && matrix.target == 'x86_64-unknown-linux-gnu'
         run: |
           sudo apt-get update
           sudo apt-get install -y libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
+
+      - name: Install Linux dependencies (ARM64)
+        if: matrix.platform == 'ubuntu-22.04' && matrix.target == 'aarch64-unknown-linux-gnu'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gcc-aarch64-linux-gnu g++-aarch64-linux-gnu
+          sudo apt-get install -y libwebkit2gtk-4.1-dev:arm64 libappindicator3-dev:arm64 librsvg2-dev:arm64 patchelf
+          sudo dpkg --add-architecture arm64
+          sudo apt-get update
+          sudo apt-get install -y libwebkit2gtk-4.1-dev:arm64 libappindicator3-dev:arm64 librsvg2-dev:arm64
 
       - name: Install Windows dependencies
         if: matrix.platform == 'windows-latest'

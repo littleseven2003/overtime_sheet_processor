@@ -1,0 +1,77 @@
+name: Build & Release
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # Windows
+          - platform: windows-latest
+            target: x86_64-pc-windows-msvc
+            artifact_suffix: win-x64
+
+          # macOS
+          - platform: macos-latest
+            target: aarch64-apple-darwin
+            artifact_suffix: mac-arm64
+          - platform: macos-13
+            target: x86_64-apple-darwin
+            artifact_suffix: mac-x64
+
+          # Linux
+          - platform: ubuntu-22.04
+            target: x86_64-unknown-linux-gnu
+            artifact_suffix: linux-x64
+
+    runs-on: ${{ matrix.platform }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.target }}
+
+      - name: Install Linux dependencies
+        if: matrix.platform == 'ubuntu-22.04'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
+
+      - name: Install Windows dependencies
+        if: matrix.platform == 'windows-latest'
+        run: |
+          choco install imagemagick -y
+
+      - name: Generate Windows icon
+        if: matrix.platform == 'windows-latest'
+        run: |
+          magick src-tauri/icons/icon.png -resize 256x256 src-tauri/icons/icon.ico
+
+      - name: Install frontend dependencies
+        run: npm install
+
+      - name: Build Tauri app
+        uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tauriScript: npx tauri
+          args: --target ${{ matrix.target }}
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-${{ matrix.artifact_suffix }}
+          path: src-tauri/target/${{ matrix.target }}/release/bundle/**/*
